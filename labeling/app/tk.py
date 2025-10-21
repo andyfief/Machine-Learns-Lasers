@@ -184,10 +184,7 @@ class TkinterSongLabeler:
         # Divider controls frame
         divider_frame = ttk.LabelFrame(control_frame, text="Divider Controls", padding="5")
         divider_frame.grid(row=2, column=0, columnspan=4, sticky=(tk.W, tk.E), pady=(10, 0))
-
-        ttk.Button(divider_frame, text="Insert Divider", command=self.insert_divider).grid(row=0, column=0, padx=(0, 10))
-        self.selected_divider_label = ttk.Label(divider_frame, text="No divider selected")
-        self.selected_divider_label.grid(row=0, column=1, padx=(10, 0))
+        ttk.Button(divider_frame, text="Reset Dividers", command=self.reset_all_dividers).grid(row=0, column=1, padx=(0, 10))
                 
         # Status bar
         self.status_label = ttk.Label(main_frame, text="Ready - Load an audio file to begin")
@@ -432,11 +429,6 @@ class TkinterSongLabeler:
         if self.selected_divider is not None:
             divider_idx = self.dividers[self.selected_divider]
             time_pos = divider_idx / self.labels_per_second
-            self.selected_divider_label.config(
-                text=f"Selected: Divider {self.selected_divider + 1} at {time_pos:.2f}s"
-            )
-        else:
-            self.selected_divider_label.config(text="No divider selected")
         
         # Update visual display
         self.update_divider_display()
@@ -478,11 +470,13 @@ class TkinterSongLabeler:
             # Remove the divider
             removed_idx = self.dividers.pop(self.selected_divider)
             print(f"Deleted divider at index {removed_idx}")
-            
+
             # Clear selection
             self.selected_divider = None
             self.update_selected_divider_display()
             self.update_divider_display()
+        else: 
+            print("No divider selected")
     
     def update_display(self):
         """Update display periodically (10fps)"""
@@ -583,9 +577,6 @@ class TkinterSongLabeler:
             # Delete selected divider
             if self.selected_divider is not None:
                 self.delete_selected_divider()
-        elif key == 'r':
-            # Reset all dividers
-            self.reset_dividers()
         elif key == 'i':
             self.insert_divider()
     
@@ -665,11 +656,6 @@ class TkinterSongLabeler:
         
         # Clear selection
         self.selected_plateau = None
-        
-        # Close edit popup if open
-        if self.edit_popup and self.edit_popup.winfo_exists():
-            self.edit_popup.destroy()
-            self.edit_popup = None
 
     def show_plateau_edit_dialog(self, plateau):
         """Show dialog to edit the selected plateau"""
@@ -733,7 +719,7 @@ class TkinterSongLabeler:
         popup.bind('<Return>', lambda e: apply_change())
         popup.bind('<Escape>', lambda e: cancel())
 
-    def reset_dividers(self):
+    def reset_all_dividers(self):
         """Clear all dividers"""
         self.dividers.clear()
         self.selected_divider = None
@@ -807,7 +793,6 @@ class TkinterSongLabeler:
         current_labels = self.get_current_labels()
         current_labels[start_idx:end_idx + 1] = new_value
 
-        self.reset_dividers(3)
         self.clear_plateau_selection()
         
         # Update plot
