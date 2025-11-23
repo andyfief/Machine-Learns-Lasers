@@ -54,17 +54,17 @@ It is located in ```root/labeling/app/tk.py```
 How it works:
 
   - User toggles an integer label value (0-9 for speeds, 0-8 for patterns)
-  - 
+    
   - While the song plays, each frame (sampled at 10fps) is labeled with the current value.
-  - 
+    
   - User can insert "dividers" that can be moved frame-by-frame.
-  - 
+    
   - User can set labels for entire sections between dividers.
-  - 
+    
   - Labeling for speed and patterns is done on one interface.
-  - 
+    
   - Patterns are saved independently, so you can come back and modify either array later
-  - 
+    
   - User can transfer 1 array -> the other, using "Patterns->Speed" or "Speed->Patterns" buttons. Useful because a lot of changes in one array happen on the same frames as the other.
     
   - User can right click a "plateau" to change the label value. A plateau is a section between any two rising/falling edges
