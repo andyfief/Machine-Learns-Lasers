@@ -69,7 +69,7 @@ How it works:
     
   - User can right click a "plateau" to change the label value. A plateau is a section between any two rising/falling edges
     
-- tk_withStem is deprecated
+tk_withStem is deprecated
   
 **You'll notice a lot of magic numbers in files unrelated to the labeling tool. DMX signals take in hardware-specific values in a 0-255 range for hardware-specific channels.** 
 I've labeled a good portion of the dmx.set_channel calls in *some* files, but I'm not going to label everything in each file - If you're really curious as to what they're doing, you can check out the manual of the laser that im using, posted in the root dir.
